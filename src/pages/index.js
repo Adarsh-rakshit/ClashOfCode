@@ -11,10 +11,42 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export default function Home() {
+export default function Home({thisweekdata,nextweekdata}) {
   return (
     <div>
-      <TabsDemo/>
+      <TabsDemo thisweek={thisweekdata} nextweek={nextweekdata}/>
     </div>
   );
 }
+
+export async function getStaticProps() {
+  try {
+    // Use a relative URL to call the API
+    const res = await fetch(`http://localhost:3000/api/code`); 
+    const response = await res.json();
+    const thisweekdata = response.responsethisweek;
+    const nextweekdata = response.responsenextweek;  
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch contests");
+    }
+
+    return {
+      props: {
+        thisweekdata,
+        nextweekdata
+      },
+      revalidate: 60 * 60, // Optional: Revalidate every hour
+    };
+  } catch (error) {
+    console.error("Error fetching contests:", error);
+
+    return {
+      props: {
+        thisweekdata: [],
+        nextweekdata: [] // Return empty array in case of error
+      },
+    };
+  }
+}
+

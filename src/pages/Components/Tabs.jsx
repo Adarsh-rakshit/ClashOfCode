@@ -2,62 +2,49 @@
 
 import Image from "next/image";
 import { Tabs } from "./ui/tabs";
-
-export function TabsDemo() {
+import Cards from "./Cards";
+export function TabsDemo({thisweek,nextweek}) {
   const tabs = [
     {
       title: "This Week",
       value: "This Week",
       content: (
-        <div
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>ThisWeek</p>
-          <DummyContent />
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+          {thisweek.length > 0 ? (
+            thisweek.map((contest, index) => (
+              <Cards
+                key={index}
+                contestName={contest.ContestName}
+                Schedule={contest.Schedule}
+                duration={contest.Duration}
+                difficulty={contest.difficulty}
+              />
+            ))
+          ) : (
+            <p>No contests this week.</p>
+          )}
         </div>
       ),
     },
     {
-      title: "Services",
-      value: "services",
+      title: "Next Week",
+      value: "Next Week",
       content: (
-        <div
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-green-700 to-violet-900">
-          <p>Services tab</p>
-          <DummyContent />
-        </div>
-      ),
-    },
-    {
-      title: "Playground",
-      value: "playground",
-      content: (
-        <div
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Playground tab</p>
-          <DummyContent />
-        </div>
-      ),
-    },
-    {
-      title: "Content",
-      value: "content",
-      content: (
-        <div
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Content tab</p>
-          <DummyContent />
-        </div>
-      ),
-    },
-    {
-      title: "Random",
-      value: "random",
-      content: (
-        <div
-          className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Random tab</p>
-          <DummyContent />
-        </div>
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        {nextweek.length > 0 ? (
+          nextweek.map((contest, index) => (
+            <Cards
+              key={index}
+              contestName={contest.ContestName}
+              Schedule={contest.Schedule}
+              duration={contest.Duration}
+              difficulty={contest.difficulty}
+            />
+          ))
+        ) : (
+          <p>No contests this week.</p>
+        )}
+      </div>
       ),
     },
   ];
