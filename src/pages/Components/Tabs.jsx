@@ -18,6 +18,7 @@ export function TabsDemo({thisweek,nextweek,resimages}) {
                 duration={contest.Duration}
                 difficulty={contest.DifficultyLevel}
                 imageUrl={resimages[contest.OrganisationID]}
+                ContestUrl={contest.ContestURL}
               />
             ))
           ) : (
@@ -40,6 +41,7 @@ export function TabsDemo({thisweek,nextweek,resimages}) {
               duration={contest.Duration}
               difficulty={contest.DifficultyLevel}
               imageUrl={resimages[contest.OrganisationID]}
+              ContestUrl={contest.ContestURL}
             />
           ))
         ) : (

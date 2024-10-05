@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Button from "./reusables/Button";
 
-export default function Cards({ contestName, Schedule, duration, difficulty,imageUrl}) {
+export default function Cards({ contestName, Schedule, duration, difficulty,imageUrl,ContestUrl}) {
   const [formattedDate, setFormattedDate] = useState("");
   const [formattedTime, setFormattedTime] = useState("");
 
@@ -41,6 +42,7 @@ export default function Cards({ contestName, Schedule, duration, difficulty,imag
         }`}>
         {difficulty}
       </div>
+      <Button contestUrl={ContestUrl}/>
     </div>
   );
 }
