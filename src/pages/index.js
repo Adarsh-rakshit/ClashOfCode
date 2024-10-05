@@ -13,7 +13,7 @@ const geistMono = localFont({
 
 export default function Home({thisweekdata,nextweekdata,resimages}) {
   return (
-    <div>
+    <div className="min-h-screen antialiased mx-10">
       <TabsDemo thisweek={thisweekdata} nextweek={nextweekdata} resimages={resimages}/>
     </div>
   );
