@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Tabs } from "./ui/tabs";
 import Cards from "./Cards";
-export function TabsDemo({thisweek,nextweek}) {
+export function TabsDemo({thisweek,nextweek,resimages}) {
   const tabs = [
     {
       title: "This Week",
@@ -17,7 +16,8 @@ export function TabsDemo({thisweek,nextweek}) {
                 contestName={contest.ContestName}
                 Schedule={contest.Schedule}
                 duration={contest.Duration}
-                difficulty={contest.difficulty}
+                difficulty={contest.DifficultyLevel}
+                imageUrl={resimages[contest.OrganisationID]}
               />
             ))
           ) : (
@@ -38,7 +38,8 @@ export function TabsDemo({thisweek,nextweek}) {
               contestName={contest.ContestName}
               Schedule={contest.Schedule}
               duration={contest.Duration}
-              difficulty={contest.difficulty}
+              difficulty={contest.DifficultyLevel}
+              imageUrl={resimages[contest.OrganisationID]}
             />
           ))
         ) : (

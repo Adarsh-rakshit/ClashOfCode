@@ -27,24 +27,33 @@ export class Service{
             console.log("Appwrite Database Service :: "+ "getContests :: " + error);
         }
     }
-    async getOrg(fileId){
-        try {
-            return await this.databases.getDocument(
+    async getAllOrgsWithPreviews() {
+    try {
+        // Fetch all documents from the OrgCollection
+        const response = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollections.OrgCollectionId);
+
+        // Initialize an empty object to store the organizationId: imagePreviewUrl pairs
+        const orgImagePreviews = {};
+
+        // Loop through each organization document
+        for (const org of response.documents) {
+            const imageFileId = org.fileId; // Assuming the field storing the image file ID is `imageFileId`
+
+            // Fetch the image preview URL
+            const imagePreviewUrl = this.bucket.getFilePreview(
                 conf.appwriteBucketId,
-                conf.appwriteCollections.OrgCollectionId,
-                fileId
+                imageFileId
             );
-        } catch (error) {
-            console.log("Appwrite Storage Service :: "+ "getOrg :: " + error);            
-            return false;
+
+            // Store the organization ID and image preview URL in the object
+            orgImagePreviews[org.$id] = imagePreviewUrl;
         }
+        return orgImagePreviews; // Return the object containing all org IDs and their respective image previews
+    } catch (error) {
+        console.log("Error fetching organizations and image previews: ", error);
+        return {};
     }
-    getFilePreview(fileId){
-        return this.bucket.getFilePreview(
-            conf.appwriteBucketId,
-            fileId
-        ).href;
-    };
+}
 };
 
 const appwriteService = new Service();

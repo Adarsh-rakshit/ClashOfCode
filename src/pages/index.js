@@ -11,10 +11,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export default function Home({thisweekdata,nextweekdata}) {
+export default function Home({thisweekdata,nextweekdata,resimages}) {
   return (
     <div>
-      <TabsDemo thisweek={thisweekdata} nextweek={nextweekdata}/>
+      <TabsDemo thisweek={thisweekdata} nextweek={nextweekdata} resimages={resimages}/>
     </div>
   );
 }
@@ -26,17 +26,19 @@ export async function getStaticProps() {
     const response = await res.json();
     const thisweekdata = response.responsethisweek;
     const nextweekdata = response.responsenextweek;  
+    const imagefinder = await fetch(`http://localhost:3000/api/urlfetcher`);
+    const resimages = await imagefinder.json();
 
     if (!res.ok) {
       throw new Error("Failed to fetch contests");
     }
-
     return {
       props: {
         thisweekdata,
-        nextweekdata
+        nextweekdata,
+        resimages
       },
-      revalidate: 60 * 60, // Optional: Revalidate every hour
+      revalidate: 60, // Optional: Revalidate every hour
     };
   } catch (error) {
     console.error("Error fetching contests:", error);
@@ -44,7 +46,8 @@ export async function getStaticProps() {
     return {
       props: {
         thisweekdata: [],
-        nextweekdata: [] // Return empty array in case of error
+        nextweekdata: [],
+        resimages : {} // Return empty array in case of error
       },
     };
   }

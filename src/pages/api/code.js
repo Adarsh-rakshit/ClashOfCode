@@ -23,16 +23,36 @@ export default async function getcontest(req, res) {
     nextlastday.setDate(nextlastday.getDate() - nextlastday.getDay() + 14); // Next Sunday
     nextlastday.setHours(23, 59, 59, 999);
 
-
     try {
-        // Fetch contests from Appwrite service
-        const responsethisweek = await appwriteService.getContests(thisday.getTime(), lastday.getTime());
-        const responsenextweek = await appwriteService.getContests(nextthisday.getTime(), nextlastday.getTime());
-        // Extract documents array
-        // Default to an empty array if undefined
-        responsethisweek.sort((a, b) => new Date(a.Schedule) - new Date(b.Schedule));
-        responsenextweek.sort((a, b) => new Date(a.Schedule) - new Date(b.Schedule));
-        const response = { responsethisweek, responsenextweek };
+        // Fetch contests for this week and next week from Appwrite service
+        const resthis = await appwriteService.getContests(thisday.getTime(), lastday.getTime());
+        const resnext = await appwriteService.getContests(nextthisday.getTime(), nextlastday.getTime());
+        
+        // Sort contests by schedule
+        resthis.sort((a, b) => new Date(a.Schedule) - new Date(b.Schedule));
+        resnext.sort((a, b) => new Date(a.Schedule) - new Date(b.Schedule));
+        
+        // Filter out sensitive fields from the response
+        const responsethisweek = resthis.map(({ ContestName, Schedule, ContestURL, DifficultyLevel, OrganisationID, Duration }) => ({
+            ContestName,
+            Schedule,
+            ContestURL,
+            DifficultyLevel,
+            OrganisationID,
+            Duration
+        }));
+
+        const responsenextweek = resnext.map(({ ContestName, Schedule, ContestURL, DifficultyLevel, OrganisationID, Duration }) => ({
+            ContestName,
+            Schedule,
+            ContestURL,
+            DifficultyLevel,
+            OrganisationID,
+            Duration
+        }));
+
+        // Return the filtered response for both weeks
+        const response = {responsethisweek,responsenextweek};
         res.status(200).json(response);
 
     } catch (error) {
