@@ -12,7 +12,7 @@ function Navbar({ className }) {
     <div className={cn("fixed top-2 inset-x-0 max-w-md mx-auto z-50", className)}>
       <Menu setActive={setActive}>
         <Image
-          src=""
+          src="/logo.png"
           alt="logo"
           width={35}
           height={35}
