@@ -38,7 +38,7 @@ export async function getStaticProps() {
         nextweekdata,
         resimages
       },
-      revalidate: 60, // Optional: Revalidate every hour
+      revalidate: 5, // Optional: Revalidate every 15 minutes
     };
   } catch (error) {
     console.error("Error fetching contests:", error);
@@ -49,6 +49,7 @@ export async function getStaticProps() {
         nextweekdata: [],
         resimages : {} // Return empty array in case of error
       },
+      revalidate: 5,
     };
   }
 }

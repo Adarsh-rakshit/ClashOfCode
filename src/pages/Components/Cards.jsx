@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "./reusables/Button";
 
-export default function Cards({ contestName, Schedule, duration, difficulty,imageUrl,ContestUrl}) {
+export function Cards({ contestName, Schedule, duration, difficulty,imageUrl,ContestUrl}) {
   const [formattedDate, setFormattedDate] = useState("");
   const [formattedTime, setFormattedTime] = useState("");
 
@@ -46,3 +46,5 @@ export default function Cards({ contestName, Schedule, duration, difficulty,imag
     </div>
   );
 }
+
+export default Cards;

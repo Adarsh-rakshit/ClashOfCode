@@ -98,3 +98,4 @@ export const FadeInDiv = ({
 };
 
 
+export default Tabs;
