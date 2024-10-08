@@ -22,11 +22,11 @@ export default function Home({thisweekdata,nextweekdata,resimages}) {
 export async function getStaticProps() {
   try {
     // Use a relative URL to call the API
-    const res = await fetch(`http://localhost:3000/api/code`); 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/code`); 
     const response = await res.json();
     const thisweekdata = response.responsethisweek;
     const nextweekdata = response.responsenextweek;  
-    const imagefinder = await fetch(`http://localhost:3000/api/urlfetcher`);
+    const imagefinder = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/urlfetcher`);
     const resimages = await imagefinder.json();
 
     if (!res.ok) {
